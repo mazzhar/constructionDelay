@@ -58,12 +58,11 @@ violin_plot <- ggplot(profession_data, aes(x = `What is your profession?`, y = `
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
 
 
-
-
+#Work Experience Distribution by Profession
 # Get the unique professions
 unique_professions <- unique(profession_data$`What is your profession?`)
-# Generate a Set2 palette with the required number of colors
-set2_palette <- brewer.pal(n = length(unique_professions), name = "Set2")
+# Generate a Set3 palette with the required number of colors
+set3_palette <- brewer.pal(n = length(unique_professions), name = "Set3")
 # Create a named vector for color mapping
 color_mapping <- setNames(set3_palette, unique_professions)
 
