@@ -58,7 +58,3 @@ cronbachs_alpha_result <- psych::alpha(questions_data_numeric)
 
 # Print the result in a nice table format for Markdown
 kable(cronbachs_alpha_result$total, digits = 2, caption = "Cronbach's Alpha Result")
-
-
-
-
