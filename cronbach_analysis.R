@@ -53,9 +53,6 @@ cronbachs_alpha_result <- psych::alpha(questions_data_numeric)
 print(cronbachs_alpha_result)
 
 
-# Load the necessary packages
-library(psych)
-
 # Perform Cronbach's alpha analysis
 cronbachs_alpha_result <- psych::alpha(questions_data_numeric)
 
