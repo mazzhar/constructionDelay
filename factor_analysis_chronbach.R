@@ -66,14 +66,10 @@ loadings <- factor_analysis_result$loadings[, 1:3]
 loadings_df <- as.data.frame(loadings)
 
 # Add a factor variable to loadings_df
-loadings_df$Factor <- rep(c("Factor1", "Factor2", "Factor3"), length.out = nrow(loadings_df))
+loadings_df$Factor <- rep(c("Factor1", "Factor2", "Factor3"), each = nrow(loadings_df))
 
 # Print Factor Analysis Loadings
 kable(loadings_df, digits = 2, caption = "Factor Analysis Loadings")
-
-# Visualize Factor Loadings
-plot(loadings, type = "n", xlim = c(-1.5, 1.5))
-text(loadings, labels = names(questions_data_numeric), cex = 0.7)
 
 # Reshape data for ggplot
 loadings_long <- reshape2::melt(loadings_df, id.vars = "Factor", variable.name = "Question", value.name = "Loading")
