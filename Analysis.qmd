@@ -9,15 +9,51 @@ format:
 editor: visual
 ---
 
-# Cronbach Analysis
+# Methodology
+
+The analysis involves assessing the reliability of survey questions using Cronbach's alpha and identifying underlying factors through factor analysis. The visualizations aim to provide insights into the relationships between survey questions and the factors they contribute to.
+
+To assess internal consistency, Cronbach's alpha analysis is employed on Likert-scale questions related to various aspects of project management. The derived alpha coefficient serves as a reliability indicator for the survey instrument.
+
+Factor analysis, is then conducted to identify latent constructs influencing project execution. The loadings obtained from this analysis reveal the strength and direction of relationships between surveyed variables and the identified factors. The resulting graphical representation provides a clear overview of the factors influencing project activities, aiding researchers and practitioners in understanding the dynamics within the construction industry in Bangladesh.
+
+## Analysis of the Respondents
+
+As shown in the table, the average work experience of the participants of this study is calculated as 7.3 years. The minimum value of 0.2 indicates that there are participants with relatively minimal work experience. The 25th percentile, represented by Q1, is 2 years. This implies that a quarter of the participants have a work experience of 2 years or less. The median, or the 50th percentile, is 5 years. This suggests that half of the participants have a work experience of 5 years or less, emphasizing the middle point in the distribution. The 75th percentile, represented by Q3, is 10 years. This indicates that three-quarters of the participants have a work experience of 10 years or less. The maximum value of 32 years indicates the highest recorded work experience among the participants.The standard deviation of 7.2 reflects the variability or dispersion in the work experience data. A higher standard deviation suggests a wider range of work experience values.
+
+| Statistic          | Value |
+|:-------------------|:-----:|
+| Minimum            |  0.2  |
+| 1st Quartile (Q1)  |   2   |
+| Median             |   5   |
+| Mean               |  7.3  |
+| 3rd Quartile (Q3)  |  10   |
+| Maximum            |  32   |
+| Standard Deviation |  7.2  |
+
+: Table 1: Overview of the work experience distribution among study participants.
+
+Figure 1 shows the work experience distribution of the study participants, color-coded by their profession
+
+![Figure 1: Work experience distribution by profession of the study participants.](work-experience-distribution-by-profession.png)
+
+![Figure 2: Distribution of professions in this study.](distribution-of-professions.png){fig-align="center"}
+
+![Figure 3: Preliminary analysis of responses of the participants.](distribution-of-responses-by-profession.png)
+
+## Likert-Scale
+
+![Figure 4: Likert plot of the responses](likert-plot.jpg)
+
+## Cronbach Analysis
 
 | No. | Raw Alpha | Std. Alpha | G6(SMC) | Avg. r | S/N |  ASE | Mean |   SD | Median r |
 |----:|----------:|-----------:|--------:|-------:|----:|-----:|-----:|-----:|---------:|
 |   1 |      0.89 |       0.89 |    0.96 |    0.2 | 7.8 | 0.02 | 3.68 | 0.51 |     0.19 |
 
-: Table 1: Cronbach's Alpha Result
+: Table 2: Cronbach's Alpha Result
 
-## Interpretation of Cronbach's Alpha Result Overview:
+### Interpretation of Cronbach's Alpha Result Overview:
 
 Cronbach's Alpha analysis was performed to assess the internal consistency and reliability of the survey instrument. The following key indices were derived:
 
@@ -31,39 +67,39 @@ Cronbach's Alpha analysis was performed to assess the internal consistency and r
 8.  Standard Deviation (SD): 0.51
 9.  Median Inter-Item Correlation (Median r): 0.19
 
-## Key Findings:
+### Key Findings:
 
-### Reliability:
+#### Reliability:
 
 The obtained Cronbach's Alpha of 0.89 indicates high internal consistency, suggesting that the survey items are measuring a common underlying construct reliably.
 
-### Item Correlation:
+#### Item Correlation:
 
 The average inter-item correlation (Avg. r) of 0.2 signifies a moderate positive correlation between survey items, supporting the coherence of the instrument.
 
-### Signal-to-Noise Ratio:
+#### Signal-to-Noise Ratio:
 
 The Signal-to-Noise Ratio (S/N) of 7.8 suggests a strong signal relative to noise, reinforcing the reliability of the survey instrument.
 
-### Scale Properties:
+#### Scale Properties:
 
 The mean score of 3.68 reflects a balanced response pattern, while the standard deviation (SD) of 0.51 indicates moderate variability in responses.
 
-### Homogeneity:
+#### Homogeneity:
 
 Guttman's Lambda 6 (G6/Smc) value of 0.96 indicates high homogeneity among survey items, reinforcing the internal consistency of the scale.
 
-### Implications:
+#### Implications:
 
 The high Cronbach's Alpha and other indices affirm the reliability and internal consistency of the survey instrument, supporting its validity for measuring the intended construct.
 
-## Conclusion:
+### Conclusion:
 
 The robust reliability metrics obtained from the Cronbach's Alpha analysis validate the survey instrument's ability to consistently measure the targeted construct. Researchers can confidently utilize the instrument in future studies to gather reliable and internally consistent data.
 
-# Factor Analysis
+## Factor Analysis
 
-## Factor Analysis Loadings
+### Factor Analysis Loadings
 
 Factor analysis loadings are presented in Table 2. It represents the strength and direction of the relationship between observed variables (questions or items) and the underlying latent factors extracted through factor analysis. These loadings indicate how much each variable contributes to or is associated with each factor.
 
@@ -80,7 +116,7 @@ The three factors from factor analysis are like special groups of questions that
 **4. Loading Patterns:** Variables with high loadings on a particular factor are considered to be more strongly associated with that factor. In your case, for example, if a variable has a high loading on Factor 1, it means that the variation in that variable is well explained by Factor 1.
 
 | Questions                                                                   | Project Planning and Management Decisions | Subcontractor Issues and Safety Measures | Delays and Approvals in Project Execution |
-|:----------------------------------------------------------------------------|:------------------------------------------|:-----------------------------------------|:------------------------------------------|
+|:------------------|:-----------------|:-----------------|:-----------------|
 | Q1 Project planning and feasibility study issues                            | 0.17                                      | 0.47                                     | 0.17                                      |
 | Q2 Client representative corruption                                         | -0.02                                     | 0.38                                     | -0.02                                     |
 | Q3 Lack of competence in engineer teams decision                            | 0.13                                      | 0.29                                     | 0.08                                      |
@@ -113,22 +149,24 @@ The three factors from factor analysis are like special groups of questions that
 | Q30 Delay in approval of rdpp revised development project proposal          | 0.43                                      | 0.37                                     | 0.28                                      |
 | Q31 Delay in the approval of contractors work method material specification | 0.24                                      | 0.28                                     | 0.32                                      |
 
-: Table 2: Factor Analysis Loadings
+: Table 3: Factor Analysis Loadings
 
-## Interpretation of Factor Analysis Results
+### Interpretation of Factor Analysis Results
 
 Table 2 shows how each variable is related to three factors. The numbers in the table are called factor loadings. They show how strongly each variable is associated with each factor. A high number (more than 0.5) means that the variable is very related to the factor. A low number (less than 0.3) means that the variable is not very related to the factor. The following table summarizes the high loadings (\>0.3) for each factor.
 
 | Description                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------------------|-----------------------------------------------|
 | Project Planning and Management Decisions | Q15 Court cases, Q16 Land disputes, Q10 Unusual increase in material price, Q13 Errors or lack of clarity in design specification, Q12 Lack of site access to initiate work contractor, Q22 Import custom lc problem, Q23 Security problem, Q24 Inflation, Q25 Frequent change in management, Q26 Inability to provide construction yard to the contractor, Q27 Unexpected geotechnical condition, Q28 Lack of construction safety measures, Q29 Delay in rehabilitation and relocation |
 | Subcontractor Issues and Safety Measures  | Q1 Project planning and feasibility study issues, Q2 Client representative corruption, Q3 Lack of competence in engineer teams decision, Q9 Incorrect project cost estimates by consultants, Q17 Change in masterplan after start of work, Q19 Corruption in billing process, Q20 Lack of transparency, Q30 Delay in approval of rdpp revised development project proposal                                                                                                              |
 | Delays and Approvals in Project Execution | Q5 Contractor capacity limitations, Q6 Contract flaws or issues in contract packages, Q8 Contractor misunderstanding of work scope, Q11 Constructability issues not properly addressed in design, Q31 Delay in the approval of contractors work method material specification                                                                                                                                                                                                           |
 
-Table 3: Summary of Factor Analysis Loadings
+Table 4: Summary of Factor Analysis Loadings
 
 The question Q21 has a low factor loading on all three factors, which means that it is not strongly related to any of them. The question is about the low profit margin, which might be influenced by other factors not included in the analysis, such as market demand, competition, quality, etc.
 
+![Figure 5: Visual Element of Factor Loadings of Survey Questions](factor-loadings-of-survey-questions.png){fig-align="center"}
+
 ### Overall Implications
 
-Understanding these underlying factors provides valuable insights for project management interventions and strategic planning. Targeted efforts addressing the identified factors can lead to more efficient and successful project outcomes. Researchers and practitioners can leverage these findings to tailor interventions and improve project management practices.
+The insights derived from this methodology contribute to a deeper understanding of the factors influencing project execution in the construction industry of Bangladesh. By addressing these underlying factors through targeted interventions, project management practices can be enhanced, leading to more efficient and successful project outcomes. Researchers and practitioners can utilize these findings to tailor interventions, thereby improving strategic planning and project management practices in the context of the Bangladeshi construction industry.
