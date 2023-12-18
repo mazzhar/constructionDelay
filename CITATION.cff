@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Identifying and Ranking the Causes of Construction Delays
+  in Bangladesh
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - given-names: Salman
+    family-names: Mazhar
+    name-suffix: MSM
+    email: smazhar@gmail.com
+    orcid: 'https://orcid.org/0000-0002-0422-5616'
+    affiliation: Bangladesh University of Engineering and Technology
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.10400817
+    description: >-
+      Identifying and Ranking the Causes of Construction
+      Delays in Bangladesh
+repository-code: 'https://github.com/mazzhar/constructionDelay'
