@@ -1,9 +1,7 @@
 # Author: Salman Mazhar
 # Date: 19-12-2023
 
-# This will load, clean, and export in csv for local df.
-# This will avoid getting approval from google every time
-# I want to run an analysis
+# This will load, clean, and export in csv for local df.This will avoid getting approval from google every time I want to run an analysis
 
 library(tidyverse)
 library(googlesheets4)
@@ -61,8 +59,35 @@ survey_data_cleaned <- survey_data_cleaned %>%
 survey_data_cleaned <- survey_data_cleaned %>%
   select(1, cleaned_experience, everything())
 
-# Get the current date in ISO 8601 format
-current_date <- format(Sys.Date(), "%Y-%m-%d")
+
+# Map the original professions to simplified names
+profession_mapping <- c(
+  "Consultant/Consultants Engineer" = "Consultant/Engineer",
+  "Implementing Agency/Developing Authority" = "Implementing Agency/Developer",
+  "Contractor/Contractor's Engineer/Quality Control Engineer" = "Contractor/Quality Control Engineer",
+  "Academician/Researcher" = "Academician/Researcher"
+)
+
+# Apply the mapping to the "What is your profession" column
+survey_data_cleaned <- survey_data_cleaned %>%
+  mutate(`What is your profession?` = case_when(
+    grepl("Consultant/Consultants Engineer", `What is your profession?`) ~ "Consultant",
+    grepl("Implementing Agency/Developing Authority", `What is your profession?`) ~ "Implementing Agency/Developer",
+    grepl("Contractor/Contractor's Engineer|Quality Control Engineer", `What is your profession?`) ~ "Contractor/Quality Control Engineer",
+    grepl("Academician/Researcher", `What is your profession?`) ~ "Academician/Researcher",
+    TRUE ~ `What is your profession?`
+  ))
+
+
 # Export the original and cleaned data to a CSV file in the "Data" folder with the current date in the file name
-write.csv(survey_data_cleaned, paste0("Data/survey_data_cleaned_", current_date, ".csv"), row.names = FALSE)
+write.csv(survey_data_cleaned, "Data/survey_data_cleaned.csv", row.names = FALSE)
+
+
+
+
+# Get the current date in ISO 8601 format
+#current_date <- format(Sys.Date(), "%Y-%m-%d")
+
+# Export the original and cleaned data to a CSV file in the "Data" folder with the current date in the file name
+write.csv(survey_data_cleaned, paste0("Data/survey_data_cleaned.csv"), row.names = FALSE)
 
