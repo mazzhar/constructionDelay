@@ -1,13 +1,75 @@
 ---
 title: "Comprehensive Statistical Analysis of Project Management Factors"
-author: "Salman Mazhar"
-format: 
-  pdf:
+subtitle: "This study aims to understand why construction projects in Bangladesh are delayed and why it's important. By conducting interviews and surveys with key players, the study seeks to identify and rank the main reasons behind these delays"
+author:
+  - name: "Salman Mazhar"
+    id: M.SM
+    orcid: 0000-0002-0422-5616
+    email: smazhar@gmail.com
+    affiliation:
+      - name: Bangladesh University of Engineering and Technology
+        affiliation-url: https://www.buet.ac.bd/web/#/
+        url: www.github.com/mazzhar
+abstract: >
+  The construction industry in Bangladesh has shown significant improvement       recently, driven largely by advancements in the country's socio-economic        conditions. However, widespread project delays persist, leading to increased    costs, diminished economic returns, and disruptions in long-term project        operations. In some cases, projects face abandonment due to these delays. To address this issue, it is crucial to identify and prioritize the key causes of construction delays. This study seeks to achieve this by conducting interviews with relevant stakeholders (Development Authority, Contractor, Consultant) involved in various ongoing mega projects across Bangladesh through questionnaire surveys. The severity of these causes will be analyzed statistically and presented in descending order. The study aims to recommend a practical prevention method based on its findings to mitigate delays in major construction projects in Bangladesh.
+
+keywords:     
+  - Construction Industry
+  - Bangladesh
+  - Project Delays
+  - Stakeholders
+  - Mega Projects
+  - Questionnaire Surveys
+  - Statistical Analysis
+  - Prevention Methods
+
+title-block-banner: true
+
+date: last-modified
+output:
+  quarto::html_document:
     toc: true
-    date: "Last Updated: `r format(Sys.time(), '%F')`"
-    number-sections: true
-editor: visual
+    number_sections: true
+execute:
+  echo: false
+  warning: false
+citation: true
+bibliography: references.bib
+funding: "The author received no specific funding for this work."
 ---
+
+<!-- Front matter from https://quarto.org/docs/authoring/front-matter.html -->
+
+
+```{r}
+#| label: load-packages
+#| message: false
+library(tidyverse)
+library(googlesheets4)
+library(likert)
+library(dplyr)
+library(knitr)
+library(janitor) # Load the janitor package
+library(cowplot) # Load the cowplot package
+library(sjPlot)
+library(RColorBrewer) # Gnuplot Earth palette with repetition
+library(webshot)
+library(webshot2)
+library(here)       #Do not need to hardcode file paths
+library(kableExtra) #For table
+library(knitr)      #For table
+library(ggplot2)    #For plots
+library(viridis)    #Color pallete
+# Authenticate your Google account
+gs4_auth()
+
+# Create the file path using here(). No need to hardcode the full path.
+csv_file_path <- here("data", "survey_data_cleaned.csv")
+
+# Read the CSV file
+survey_data <- read.csv(csv_file_path, check.names = FALSE) #check.names = FALSE removes all the dots in the column names by default.
+
+```
 
 # Methodology
 
@@ -21,29 +83,133 @@ Factor analysis, is then conducted to identify latent constructs influencing pro
 
 As shown in the table, the average work experience of the participants of this study is calculated as 7.3 years. The minimum value of 0.2 indicates that there are participants with relatively minimal work experience. The 25th percentile, represented by Q1, is 2 years. This implies that a quarter of the participants have a work experience of 2 years or less. The median, or the 50th percentile, is 5 years. This suggests that half of the participants have a work experience of 5 years or less, emphasizing the middle point in the distribution. The 75th percentile, represented by Q3, is 10 years. This indicates that three-quarters of the participants have a work experience of 10 years or less. The maximum value of 32 years indicates the highest recorded work experience among the participants.The standard deviation of 7.2 reflects the variability or dispersion in the work experience data. A higher standard deviation suggests a wider range of work experience values.
 
-| Statistic          | Value |
-|:-------------------|:-----:|
-| Minimum            |  0.2  |
-| 1st Quartile (Q1)  |   2   |
-| Median             |   5   |
-| Mean               |  7.3  |
-| 3rd Quartile (Q3)  |  10   |
-| Maximum            |  32   |
-| Standard Deviation |  7.2  |
+```{r}
+#| label: statistics-work-experience
+#| message: false
 
-: Table 1: Overview of the work experience distribution among study participants.
+# Summary statistics
+summary_stats <- summary(survey_data$cleaned_experience)
+sd <- sd(survey_data$cleaned_experience)
+q1 <- quantile(survey_data$cleaned_experience, 0.25)
+q3 <- quantile(survey_data$cleaned_experience, 0.75)
+
+# Create a data frame with the summary statistics
+summary_df <- data.frame(
+  Statistic = c("Minimum", "1st Quartile (Q1)", "Median", "Mean", "3rd Quartile (Q3)", "Maximum", "Standard Deviation"),
+  Value = c(
+    format(min(survey_data$cleaned_experience), digits = 2),
+    format(q1, digits = 2),
+    format(median(survey_data$cleaned_experience), digits = 2),
+    format(mean(survey_data$cleaned_experience), digits = 2),
+    format(q3, digits = 2),
+    format(max(survey_data$cleaned_experience), digits = 2),
+    format(sd, digits = 2)
+  )
+)
+
+# Print the beautiful table with custom formatting and a caption
+kable(summary_df, format = "html", caption = "Overview of the work experience distribution among study participants") %>%
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    position = "center"
+  ) %>%
+  column_spec(2, width = "2cm")  # Adjust column width as needed
+
+
+```
 
 Figure 1 shows the work experience distribution of the study participants, color-coded by their profession
 
-![Figure 1: Work experience distribution by profession of the study participants.](work-experience-distribution-by-profession.png)
+```{r}
+#| label: distribution-plots
+#| echo: false
+#Work Experience Distribution by Profession
+# Get the unique professions
+unique_professions <- unique(survey_data$`What is your profession?`)
+# Generate a Viridis palette with the required number of colors
+viridis_palette <- viridis::viridis(length(unique_professions))
+# Create a named vector for color mapping
+color_mapping <- setNames(viridis_palette, unique_professions)
 
-![Figure 2: Distribution of professions in this study.](distribution-of-professions.png){fig-align="center"}
 
-![Figure 3: Preliminary analysis of responses of the participants.](distribution-of-responses-by-profession.png)
+# Calculate the number of participants
+n_participants <- nrow(survey_data)
+
+# Create the histogram plot with default legend placement
+simple_histogram_by_profession <- ggplot(survey_data, aes(x = cleaned_experience, fill = `What is your profession?`)) +
+  geom_histogram(alpha = 0.7, binwidth = 1, position = "identity", color = "white") +
+  labs(
+    title = "Work Experience Distribution by Profession",
+    subtitle = paste("Number of Participants, n =", n_participants),
+    x = "Years of Work Experience",
+    y = "Frequency"  # or "Density"
+  ) +
+  scale_fill_manual(values = color_mapping) +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    axis.line = element_line(color = "black")
+  )
+
+# Display the plot
+print(simple_histogram_by_profession)
+```
 
 ## Likert-Scale
 
-![Figure 4: Likert plot of the responses](likert-plot.jpg)
+```{r}
+#| label: likert-plot-code
+#| echo: false
+
+survey_data <- read_sheet("https://docs.google.com/spreadsheets/d/12HrHClwlinGBj-zpIPYBi14shBsk1Tk08RTvRtyKuk0/edit?usp=drive_link", sheet = "data", range = "A1:AG61")
+
+survey_data <- survey_data %>%
+  rename(profession = `What is your profession?`,
+         work_experience = `Your years of work experience`
+  )
+
+questions_columns <- grep("^q", names(survey_data), value = TRUE)
+questions_data <- survey_data[, c("profession", questions_columns)]
+
+levels <- c("Disagree", "Strongly Disagree", "Neutral", "Agree", "Strongly Agree")
+
+survey<- lapply(survey_data[, 3:32], function(x) factor(x, levels = levels))
+
+# Convert the list to a data frame
+survey_df <- as.data.frame(survey)
+names(survey_df) <- gsub("\\.", " ", names(survey_df))
+
+# Create a Likert plot
+likert_plot <- likert(survey_df)
+
+# Set the size of the output image
+width <- 15  # in inches, adjust as needed
+height <- 10  # in inches
+
+# Set the resolution of the output image
+dpi <- 600  # dots per inch
+
+# Set the size of the text in the plot
+base_size <- 10
+
+# Create the plot
+p <- plot(likert_plot, wrap = 60) +
+  theme(plot.title = element_text(size = base_size * 1.5, color = "black"),
+        axis.title = element_text(size = base_size, color = "black"),
+        axis.text = element_text(color = "black", size = base_size),
+        plot.margin = margin(5, 5, 5, 5, "mm"), # Adjust as needed
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 1)) # Adjust linewidth as needed
+
+# Save the plot to a file with the specified size and resolution
+ggsave("likert_plot.png", plot = p, width = width, height = height, dpi = dpi)
+
+# Display the plot
+print(p)
+```
 
 ## Cronbach Analysis
 
@@ -116,7 +282,7 @@ The three factors from factor analysis are like special groups of questions that
 **4. Loading Patterns:** Variables with high loadings on a particular factor are considered to be more strongly associated with that factor. In your case, for example, if a variable has a high loading on Factor 1, it means that the variation in that variable is well explained by Factor 1.
 
 | Questions                                                                   | Project Planning and Management Decisions | Subcontractor Issues and Safety Measures | Delays and Approvals in Project Execution |
-|:------------------|:-----------------|:-----------------|:-----------------|
+|:-------------------|:----------------|:----------------|:----------------|
 | Q1 Project planning and feasibility study issues                            | 0.17                                      | 0.47                                     | 0.17                                      |
 | Q2 Client representative corruption                                         | -0.02                                     | 0.38                                     | -0.02                                     |
 | Q3 Lack of competence in engineer teams decision                            | 0.13                                      | 0.29                                     | 0.08                                      |
@@ -156,7 +322,7 @@ The three factors from factor analysis are like special groups of questions that
 Table 2 shows how each variable is related to three factors. The numbers in the table are called factor loadings. They show how strongly each variable is associated with each factor. A high number (more than 0.5) means that the variable is very related to the factor. A low number (less than 0.3) means that the variable is not very related to the factor. The following table summarizes the high loadings (\>0.3) for each factor.
 
 | Description                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|------------------------|-----------------------------------------------|
+|-------------------|-----------------------------------------------------|
 | Project Planning and Management Decisions | Q15 Court cases, Q16 Land disputes, Q10 Unusual increase in material price, Q13 Errors or lack of clarity in design specification, Q12 Lack of site access to initiate work contractor, Q22 Import custom lc problem, Q23 Security problem, Q24 Inflation, Q25 Frequent change in management, Q26 Inability to provide construction yard to the contractor, Q27 Unexpected geotechnical condition, Q28 Lack of construction safety measures, Q29 Delay in rehabilitation and relocation |
 | Subcontractor Issues and Safety Measures  | Q1 Project planning and feasibility study issues, Q2 Client representative corruption, Q3 Lack of competence in engineer teams decision, Q9 Incorrect project cost estimates by consultants, Q17 Change in masterplan after start of work, Q19 Corruption in billing process, Q20 Lack of transparency, Q30 Delay in approval of rdpp revised development project proposal                                                                                                              |
 | Delays and Approvals in Project Execution | Q5 Contractor capacity limitations, Q6 Contract flaws or issues in contract packages, Q8 Contractor misunderstanding of work scope, Q11 Constructability issues not properly addressed in design, Q31 Delay in the approval of contractors work method material specification                                                                                                                                                                                                           |
@@ -164,8 +330,6 @@ Table 2 shows how each variable is related to three factors. The numbers in the 
 Table 4: Summary of Factor Analysis Loadings
 
 The question Q21 has a low factor loading on all three factors, which means that it is not strongly related to any of them. The question is about the low profit margin, which might be influenced by other factors not included in the analysis, such as market demand, competition, quality, etc.
-
-![Figure 5: Visual Element of Factor Loadings of Survey Questions](factor-loadings-of-survey-questions.png){fig-align="center"}
 
 ### Overall Implications
 
